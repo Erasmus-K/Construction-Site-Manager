@@ -1,6 +1,6 @@
 import { useState, useCallback } from 'react';
 
-const API_ENDPOINT = import.meta.env.VITE_SENTINEL_API_ENDPOINT || 'http://localhost:3003/ai/analysis';
+const API_ENDPOINT = '/api/ai/analysis';
 
 export const useSentinelAgent = () => {
   const [loading, setLoading] = useState(false);

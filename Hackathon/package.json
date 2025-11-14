@@ -10,7 +10,8 @@
     "ai-server": "node mock-ai-server.js",
     "sentinel-server": "node mock-sentinel-server.js",
     "auth-server": "node server/auth-server.js",
-    "start": "node start-all.js",
+    "start": "vite",
+    "build": "vite build",
     "start-old": "concurrently \"npm run server\" \"npm run ai-server\" \"npm run sentinel-server\" \"npm run auth-server\" \"sleep 3 && npm run dev\""
   },
   "dependencies": {

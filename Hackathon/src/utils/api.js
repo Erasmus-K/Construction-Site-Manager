@@ -1,15 +1,13 @@
-const API_BASE = 'http://localhost:3001';
-
 export const api = {
   // Works
-  getWorks: () => fetch(`${API_BASE}/works?_expand=user`).then(r => r.json()),
-  getWork: (id) => fetch(`${API_BASE}/works/${id}`).then(r => r.json()),
-  createWork: (work) => fetch(`${API_BASE}/works`, {
+  getWorks: () => fetch('/api/data/works').then(r => r.json()),
+  getWork: (id) => fetch(`/api/data/works?id=${id}`).then(r => r.json()),
+  createWork: (work) => fetch('/api/data/works', {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify(work)
   }).then(r => r.json()),
-  updateWork: (id, work) => fetch(`${API_BASE}/works/${id}`, {
+  updateWork: (id, work) => fetch(`/api/data/works?id=${id}`, {
     method: 'PATCH',
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify(work)
@@ -24,8 +22,8 @@ export const api = {
   }).then(r => r.json()),
 
   // Equipment
-  getEquipment: () => fetch(`${API_BASE}/equipment`).then(r => r.json()),
-  updateEquipment: (id, equipment) => fetch(`${API_BASE}/equipment/${id}`, {
+  getEquipment: () => fetch('/api/data/equipment').then(r => r.json()),
+  updateEquipment: (id, equipment) => fetch(`/api/data/equipment?id=${id}`, {
     method: 'PATCH',
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify(equipment)
@@ -40,8 +38,8 @@ export const api = {
   }).then(r => r.json()),
 
   // Finances
-  getFinances: () => fetch(`${API_BASE}/finances?_expand=work`).then(r => r.json()),
-  createFinance: (finance) => fetch(`${API_BASE}/finances`, {
+  getFinances: () => fetch('/api/data/finances').then(r => r.json()),
+  createFinance: (finance) => fetch('/api/data/finances', {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify(finance)
@@ -56,7 +54,7 @@ export const api = {
   }).then(r => r.json()),
 
   // Users
-  getUsers: () => fetch(`${API_BASE}/users`).then(r => r.json()),
+  getUsers: () => fetch('/api/users').then(r => r.json()),
   createUser: (user) => fetch(`${API_BASE}/users`, {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },

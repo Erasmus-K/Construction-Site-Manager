@@ -25,7 +25,7 @@ const SignUp = () => {
     setError('');
 
     try {
-      const response = await fetch('http://localhost:3004/auth/signup', {
+      const response = await fetch('/api/auth/signup', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(formData)
