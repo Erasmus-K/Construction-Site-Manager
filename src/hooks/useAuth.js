@@ -1,4 +1,5 @@
 import React, { createContext, useContext, useState, useEffect } from 'react';
+import { API_BASE_URL } from '../config/api';
 
 const AuthContext = createContext();
 
@@ -24,7 +25,7 @@ export const AuthProvider = ({ children }) => {
 
   const login = async (username, password, role) => {
     try {
-      const response = await fetch('http://localhost:3001/users');
+      const response = await fetch(`${API_BASE_URL}/users`);
       const users = await response.json();
       
       const user = users.find(u => 

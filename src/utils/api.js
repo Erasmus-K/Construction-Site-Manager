@@ -1,13 +1,15 @@
+import { API_BASE_URL } from '../config/api';
+
 export const api = {
   // Works
-  getWorks: () => fetch('http://localhost:3001/works').then(r => r.json()),
-  getWork: (id) => fetch(`http://localhost:3001/works/${id}`).then(r => r.json()),
-  createWork: (work) => fetch('http://localhost:3001/works', {
+  getWorks: () => fetch(`${API_BASE_URL}/works`).then(r => r.json()),
+  getWork: (id) => fetch(`${API_BASE_URL}/works/${id}`).then(r => r.json()),
+  createWork: (work) => fetch(`${API_BASE_URL}/works`, {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify(work)
   }).then(r => r.json()),
-  updateWork: (id, work) => fetch(`http://localhost:3001/works/${id}`, {
+  updateWork: (id, work) => fetch(`${API_BASE_URL}/works/${id}`, {
     method: 'PATCH',
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify(work)
@@ -22,13 +24,13 @@ export const api = {
   }).then(r => r.json()),
 
   // Equipment
-  getEquipment: () => fetch('http://localhost:3001/equipment').then(r => r.json()),
-  createEquipment: (equipment) => fetch('http://localhost:3001/equipment', {
+  getEquipment: () => fetch(`${API_BASE_URL}/equipment`).then(r => r.json()),
+  createEquipment: (equipment) => fetch(`${API_BASE_URL}/equipment`, {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify(equipment)
   }).then(r => r.json()),
-  updateEquipment: (id, equipment) => fetch(`http://localhost:3001/equipment/${id}`, {
+  updateEquipment: (id, equipment) => fetch(`${API_BASE_URL}/equipment/${id}`, {
     method: 'PATCH',
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify(equipment)
@@ -59,7 +61,7 @@ export const api = {
   }).then(r => r.json()),
 
   // Users
-  getUsers: () => fetch('http://localhost:3001/users').then(r => r.json()),
+  getUsers: () => fetch(`${API_BASE_URL}/users`).then(r => r.json()),
   createUser: (user) => fetch(`${API_BASE}/users`, {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
