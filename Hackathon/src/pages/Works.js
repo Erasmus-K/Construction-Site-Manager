@@ -25,8 +25,7 @@ const Works = () => {
 
   const fetchWorks = async () => {
     try {
-      const response = await fetch('http://localhost:3001/works?_t=' + Date.now());
-      const data = await response.json();
+      const data = await api.getWorks();
       setWorks(data);
     } catch (error) {
       console.error('Failed to fetch works:', error);

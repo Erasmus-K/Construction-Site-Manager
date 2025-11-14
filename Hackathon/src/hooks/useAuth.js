@@ -24,6 +24,29 @@ export const AuthProvider = ({ children }) => {
 
   const login = async (username, password, role) => {
     try {
+      const response = await fetch('http://localhost:3001/users');
+      const users = await response.json();
+      
+      const user = users.find(u => 
+        u.username === username && 
+        u.password === password && 
+        u.role === role
+      );
+      
+      if (user) {
+        setUser(user);
+        localStorage.setItem('user', JSON.stringify(user));
+        return { success: true };
+      } else {
+        return { success: false, error: 'Invalid credentials' };
+      }
+    } catch (error) {
+      return { success: false, error: 'Network error' };
+    }
+  };
+
+  const loginProduction = async (username, password, role) => {
+    try {
       const response = await fetch('/api/auth/login', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },

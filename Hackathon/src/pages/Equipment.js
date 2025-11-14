@@ -4,6 +4,12 @@ import { api } from '../utils/api';
 const Equipment = () => {
   const [equipment, setEquipment] = useState([]);
   const [works, setWorks] = useState([]);
+  const [showForm, setShowForm] = useState(false);
+  const [formData, setFormData] = useState({
+    name: '',
+    type: '',
+    dailyRate: ''
+  });
 
   useEffect(() => {
     fetchEquipment();
@@ -41,6 +47,26 @@ const Equipment = () => {
     }
   };
 
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    try {
+      await api.createEquipment({
+        name: formData.name,
+        type: formData.type,
+        status: 'available',
+        assignedTo: null,
+        workId: null,
+        dailyRate: parseFloat(formData.dailyRate)
+      });
+      
+      setFormData({ name: '', type: '', dailyRate: '' });
+      setShowForm(false);
+      fetchEquipment();
+    } catch (error) {
+      console.error('Failed to create equipment:', error);
+    }
+  };
+
   return (
     <div className="space-y-6">
       <div className="flex justify-between items-center">
@@ -54,8 +80,86 @@ const Equipment = () => {
               {equipment.filter(e => e.status === 'assigned').length} Assigned
             </span>
           </div>
+          <button 
+            className="bg-blue-600 hover:bg-blue-700 text-white px-6 py-2 rounded-lg transition-colors duration-200 flex items-center space-x-2"
+            onClick={() => setShowForm(true)}
+          >
+            <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 6v6m0 0v6m0-6h6m-6 0H6" />
+            </svg>
+            <span>Add Equipment</span>
+          </button>
         </div>
       </div>
+
+      {showForm && (
+        <div className="bg-white rounded-lg shadow-md mb-6">
+          <div className="px-6 py-4 border-b border-gray-200">
+            <h2 className="text-xl font-semibold text-gray-800">Add New Equipment</h2>
+          </div>
+          <div className="p-6">
+            <form onSubmit={handleSubmit} className="space-y-4">
+              <div>
+                <label className="block text-sm font-medium text-gray-700 mb-2">Equipment Name</label>
+                <input
+                  type="text"
+                  className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                  value={formData.name}
+                  onChange={(e) => setFormData({...formData, name: e.target.value})}
+                  placeholder="e.g., Excavator CAT 320"
+                  required
+                />
+              </div>
+              
+              <div>
+                <label className="block text-sm font-medium text-gray-700 mb-2">Type</label>
+                <select
+                  className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                  value={formData.type}
+                  onChange={(e) => setFormData({...formData, type: e.target.value})}
+                  required
+                >
+                  <option value="">Select Type</option>
+                  <option value="heavy_machinery">Heavy Machinery</option>
+                  <option value="machinery">Machinery</option>
+                  <option value="tools">Tools</option>
+                  <option value="vehicles">Vehicles</option>
+                </select>
+              </div>
+              
+              <div>
+                <label className="block text-sm font-medium text-gray-700 mb-2">Daily Rate ($)</label>
+                <input
+                  type="number"
+                  className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                  value={formData.dailyRate}
+                  onChange={(e) => setFormData({...formData, dailyRate: e.target.value})}
+                  placeholder="0.00"
+                  min="0"
+                  step="0.01"
+                  required
+                />
+              </div>
+              
+              <div className="flex space-x-4">
+                <button 
+                  type="submit" 
+                  className="bg-blue-600 hover:bg-blue-700 text-white px-6 py-2 rounded-lg transition-colors duration-200"
+                >
+                  Add Equipment
+                </button>
+                <button 
+                  type="button" 
+                  className="bg-gray-500 hover:bg-gray-600 text-white px-6 py-2 rounded-lg transition-colors duration-200"
+                  onClick={() => setShowForm(false)}
+                >
+                  Cancel
+                </button>
+              </div>
+            </form>
+          </div>
+        </div>
+      )}
 
       <div className="bg-white rounded-lg shadow-md">
         <div className="px-6 py-4 border-b border-gray-200">

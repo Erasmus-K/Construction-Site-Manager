@@ -20,8 +20,18 @@ const Labour = () => {
 
   const fetchLabourLogs = async () => {
     try {
-      const data = await api.getLabourLogs();
-      setLabourLogs(data);
+      const [logs, worksData] = await Promise.all([
+        api.getLabourLogs(),
+        api.getWorks()
+      ]);
+      
+      // Add work information to each log
+      const logsWithWork = logs.map(log => ({
+        ...log,
+        work: worksData.find(w => w.id === log.workId)
+      }));
+      
+      setLabourLogs(logsWithWork);
     } catch (error) {
       console.error('Failed to fetch labour logs:', error);
     }

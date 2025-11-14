@@ -25,19 +25,25 @@ const SignUp = () => {
     setError('');
 
     try {
-      const response = await fetch('/api/auth/signup', {
+      const response = await fetch('http://localhost:3001/users', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(formData)
+        body: JSON.stringify({
+          username: formData.username,
+          password: formData.password,
+          name: formData.name,
+          email: formData.email,
+          role: formData.role
+        })
       });
 
       const result = await response.json();
 
-      if (result.success) {
+      if (response.ok) {
         alert('Account created successfully! Please login.');
         window.location.href = '/login';
       } else {
-        setError(result.error);
+        setError('Failed to create account');
       }
     } catch (error) {
       setError('Network error. Please try again.');
