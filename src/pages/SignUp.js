@@ -25,11 +25,32 @@ const SignUp = () => {
     setLoading(true);
     setError('');
 
+    // Validate passwords match
+    if (formData.password !== formData.confirmPassword) {
+      setError('Passwords do not match');
+      setLoading(false);
+      return;
+    }
+
     try {
+      // Check if username already exists
+      const checkResponse = await fetch(`${API_BASE_URL}/users?username=${formData.username}`);
+      const existingUsers = await checkResponse.json();
+      
+      if (existingUsers.length > 0) {
+        setError('Username already exists');
+        setLoading(false);
+        return;
+      }
+
+      // Generate unique ID
+      const id = Math.random().toString(36).substr(2, 4);
+
       const response = await fetch(`${API_BASE_URL}/users`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
+          id,
           username: formData.username,
           password: formData.password,
           name: formData.name,
@@ -38,16 +59,16 @@ const SignUp = () => {
         })
       });
 
-      const result = await response.json();
-
       if (response.ok) {
         alert('Account created successfully! Please login.');
         window.location.href = '/login';
       } else {
-        setError('Failed to create account');
+        const errorText = await response.text();
+        setError(`Failed to create account: ${errorText}`);
       }
     } catch (error) {
-      setError('Network error. Please try again.');
+      console.error('Signup error:', error);
+      setError(`Network error: ${error.message}`);
     }
     
     setLoading(false);
