@@ -33,11 +33,11 @@ const SignUp = () => {
     }
 
     try {
-      // Check if username already exists
-      const checkResponse = await fetch(`${API_BASE_URL}/users?username=${formData.username}`);
-      const existingUsers = await checkResponse.json();
+      // Get existing users from localStorage
+      const existingUsers = JSON.parse(localStorage.getItem('customUsers') || '[]');
       
-      if (existingUsers.length > 0) {
+      // Check if username already exists
+      if (existingUsers.find(user => user.username === formData.username)) {
         setError('Username already exists');
         setLoading(false);
         return;
@@ -45,30 +45,26 @@ const SignUp = () => {
 
       // Generate unique ID
       const id = Math.random().toString(36).substr(2, 4);
-
-      const response = await fetch(`${API_BASE_URL}/users`, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          id,
-          username: formData.username,
-          password: formData.password,
-          name: formData.name,
-          email: formData.email,
-          role: formData.role
-        })
-      });
-
-      if (response.ok) {
-        alert('Account created successfully! Please login.');
-        window.location.href = '/login';
-      } else {
-        const errorText = await response.text();
-        setError(`Failed to create account: ${errorText}`);
-      }
+      
+      // Create new user
+      const newUser = {
+        id,
+        username: formData.username,
+        password: formData.password,
+        name: formData.name,
+        email: formData.email,
+        role: formData.role
+      };
+      
+      // Add to localStorage
+      existingUsers.push(newUser);
+      localStorage.setItem('customUsers', JSON.stringify(existingUsers));
+      
+      alert('Account created successfully! Please login.');
+      window.location.href = '/login';
     } catch (error) {
       console.error('Signup error:', error);
-      setError(`Network error: ${error.message}`);
+      setError(`Error: ${error.message}`);
     }
     
     setLoading(false);

@@ -25,14 +25,25 @@ export const AuthProvider = ({ children }) => {
 
   const login = async (username, password, role) => {
     try {
+      // Check API users first
       const response = await fetch(`${API_BASE_URL}/users`);
-      const users = await response.json();
+      const apiUsers = await response.json();
       
-      const user = users.find(u => 
+      let user = apiUsers.find(u => 
         u.username === username && 
         u.password === password && 
         u.role === role
       );
+      
+      // If not found in API, check localStorage users
+      if (!user) {
+        const localUsers = JSON.parse(localStorage.getItem('customUsers') || '[]');
+        user = localUsers.find(u => 
+          u.username === username && 
+          u.password === password && 
+          u.role === role
+        );
+      }
       
       if (user) {
         setUser(user);
@@ -42,6 +53,20 @@ export const AuthProvider = ({ children }) => {
         return { success: false, error: 'Invalid credentials' };
       }
     } catch (error) {
+      // Fallback to localStorage only if API fails
+      const localUsers = JSON.parse(localStorage.getItem('customUsers') || '[]');
+      const user = localUsers.find(u => 
+        u.username === username && 
+        u.password === password && 
+        u.role === role
+      );
+      
+      if (user) {
+        setUser(user);
+        localStorage.setItem('user', JSON.stringify(user));
+        return { success: true };
+      }
+      
       return { success: false, error: 'Network error' };
     }
   };
