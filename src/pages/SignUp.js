@@ -78,12 +78,12 @@ const SignUp = () => {
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-blue-50 to-indigo-100">
-      <div className="max-w-md w-full mx-4">
-        <form className="bg-white shadow-xl rounded-lg p-8" onSubmit={handleSubmit}>
-          <div className="text-center mb-8">
-            <h2 className="text-3xl font-bold text-gray-800">Create Account</h2>
-            <p className="text-gray-600 mt-2">Join Construction Site Manager</p>
+    <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-blue-50 to-indigo-100 px-4">
+      <div className="max-w-md w-full">
+        <form className="bg-white shadow-xl rounded-lg p-6 lg:p-8" onSubmit={handleSubmit}>
+          <div className="text-center mb-6 lg:mb-8">
+            <h2 className="text-2xl lg:text-3xl font-bold text-gray-800">Create Account</h2>
+            <p className="text-gray-600 mt-2 text-sm lg:text-base">Join Construction Site Manager</p>
             <Link to="/" className="text-blue-600 hover:text-blue-800 text-sm">← Back to Home</Link>
           </div>
           
@@ -93,7 +93,7 @@ const SignUp = () => {
             </div>
           )}
           
-          <div className="space-y-4">
+          <div className="space-y-4 lg:space-y-6">
             <div>
               <label className="block text-sm font-medium text-gray-700 mb-2">Full Name</label>
               <input
@@ -172,7 +172,7 @@ const SignUp = () => {
             
             <button 
               type="submit" 
-              className="w-full bg-blue-600 hover:bg-blue-700 text-white font-medium py-3 px-4 rounded-lg transition-colors duration-200 disabled:opacity-50"
+              className="w-full bg-blue-600 hover:bg-blue-700 text-white font-medium py-3 px-4 rounded-lg transition-colors duration-200 disabled:opacity-50 text-sm lg:text-base"
               disabled={loading}
             >
               {loading ? 'Creating Account...' : 'Create Account'}
@@ -180,7 +180,7 @@ const SignUp = () => {
           </div>
           
           <div className="mt-6 text-center">
-            <p className="text-gray-600">
+            <p className="text-gray-600 text-sm lg:text-base">
               Already have an account?{' '}
               <Link to="/login" className="text-blue-600 hover:text-blue-800 font-medium">
                 Sign In

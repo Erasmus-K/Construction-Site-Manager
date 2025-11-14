@@ -106,17 +106,18 @@ const Works = () => {
 
   return (
     <div className="space-y-6">
-      <div className="flex justify-between items-center mb-6">
-        <h1 className="text-3xl font-bold text-gray-800">Works Management</h1>
+      <div className="flex flex-col sm:flex-row sm:justify-between sm:items-center mb-6 space-y-4 sm:space-y-0">
+        <h1 className="text-2xl lg:text-3xl font-bold text-gray-800">Works Management</h1>
         {['admin', 'site_agent'].includes(user?.role) && (
           <button 
-            className="bg-blue-600 hover:bg-blue-700 text-white px-6 py-2 rounded-lg transition-colors duration-200 flex items-center space-x-2"
+            className="bg-blue-600 hover:bg-blue-700 text-white px-4 lg:px-6 py-2 rounded-lg transition-colors duration-200 flex items-center justify-center space-x-2 text-sm lg:text-base"
             onClick={() => setShowForm(true)}
           >
-            <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <svg className="w-4 h-4 lg:w-5 lg:h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 6v6m0 0v6m0-6h6m-6 0H6" />
             </svg>
-            <span>Create New Work</span>
+            <span className="hidden sm:inline">Create New Work</span>
+            <span className="sm:hidden">New Work</span>
           </button>
         )}
       </div>
@@ -234,7 +235,59 @@ const Works = () => {
         <div className="px-6 py-4 border-b border-gray-200">
           <h2 className="text-xl font-semibold text-gray-800">All Works</h2>
         </div>
-        <div className="overflow-x-auto">
+        {/* Mobile Card View */}
+        <div className="block lg:hidden">
+          {works.length === 0 ? (
+            <div className="p-6 text-center text-gray-500">No works found</div>
+          ) : (
+            <div className="space-y-4 p-4">
+              {works.map(work => {
+                const reconciliation = getFinancialReconciliation(work);
+                return (
+                  <div key={work.id} className="bg-gray-50 rounded-lg p-4 space-y-3">
+                    <div className="flex justify-between items-start">
+                      <h3 className="font-medium text-gray-900 text-sm">{work.title}</h3>
+                      <span className={`inline-flex px-2 py-1 text-xs font-semibold rounded-full ${
+                        work.status === 'in_progress' 
+                          ? 'bg-yellow-100 text-yellow-800' 
+                          : work.status === 'completed'
+                          ? 'bg-green-100 text-green-800'
+                          : 'bg-gray-100 text-gray-800'
+                      }`}>
+                        {work.status.replace('_', ' ')}
+                      </span>
+                    </div>
+                    <div className="grid grid-cols-2 gap-2 text-xs">
+                      <div>
+                        <span className="text-gray-500">Start:</span>
+                        <div className="font-medium">{new Date(work.startDate).toLocaleDateString()}</div>
+                      </div>
+                      <div>
+                        <span className="text-gray-500">End:</span>
+                        <div className="font-medium">{new Date(work.endDate).toLocaleDateString()}</div>
+                      </div>
+                      <div>
+                        <span className="text-gray-500">Estimated:</span>
+                        <div className="font-medium">${reconciliation.estimated.toLocaleString()}</div>
+                      </div>
+                      <div>
+                        <span className="text-gray-500">Variance:</span>
+                        <div className={`font-medium ${
+                          reconciliation.variance >= 0 ? 'text-green-600' : 'text-red-600'
+                        }`}>
+                          ${reconciliation.variance.toLocaleString()}
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                );
+              })}
+            </div>
+          )}
+        </div>
+        
+        {/* Desktop Table View */}
+        <div className="hidden lg:block overflow-x-auto">
           <table className="min-w-full divide-y divide-gray-200">
             <thead className="bg-gray-50">
               <tr>

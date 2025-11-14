@@ -38,12 +38,12 @@ const Login = () => {
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-blue-50 to-indigo-100">
-      <div className="max-w-md w-full mx-4">
-        <form className="bg-white shadow-xl rounded-lg p-8" onSubmit={handleSubmit}>
-          <div className="text-center mb-8">
-            <h2 className="text-3xl font-bold text-gray-800">Construction Site Manager</h2>
-            <p className="text-gray-600 mt-2">Please sign in to continue</p>
+    <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-blue-50 to-indigo-100 px-4">
+      <div className="max-w-md w-full">
+        <form className="bg-white shadow-xl rounded-lg p-6 lg:p-8" onSubmit={handleSubmit}>
+          <div className="text-center mb-6 lg:mb-8">
+            <h2 className="text-xl lg:text-3xl font-bold text-gray-800">Construction Site Manager</h2>
+            <p className="text-gray-600 mt-2 text-sm lg:text-base">Please sign in to continue</p>
             <a href="/" className="text-blue-600 hover:text-blue-800 text-sm">← Back to Home</a>
           </div>
           
@@ -53,7 +53,7 @@ const Login = () => {
             </div>
           )}
           
-          <div className="space-y-6">
+          <div className="space-y-4 lg:space-y-6">
             <div>
               <label className="block text-sm font-medium text-gray-700 mb-2">Username</label>
               <input
@@ -96,7 +96,7 @@ const Login = () => {
             
             <button 
               type="submit" 
-              className="w-full bg-blue-600 hover:bg-blue-700 text-white font-medium py-3 px-4 rounded-lg transition-colors duration-200 disabled:opacity-50 disabled:cursor-not-allowed"
+              className="w-full bg-blue-600 hover:bg-blue-700 text-white font-medium py-3 px-4 rounded-lg transition-colors duration-200 disabled:opacity-50 disabled:cursor-not-allowed text-sm lg:text-base"
               disabled={loading}
             >
               {loading ? (
@@ -111,7 +111,7 @@ const Login = () => {
           </div>
           
           <div className="mt-6 text-center">
-            <p className="text-gray-600">
+            <p className="text-gray-600 text-sm lg:text-base">
               Don't have an account?{' '}
               <Link to="/signup" className="text-blue-600 hover:text-blue-800 font-medium">
                 Sign Up
@@ -119,12 +119,12 @@ const Login = () => {
             </p>
           </div>
 
-          <div className="mt-4 p-4 bg-gray-50 rounded-lg">
-            <p className="text-sm font-medium text-gray-700 mb-2">Demo Accounts:</p>
+          <div className="mt-4 p-3 lg:p-4 bg-gray-50 rounded-lg">
+            <p className="text-xs lg:text-sm font-medium text-gray-700 mb-2">Demo Accounts:</p>
             <div className="text-xs text-gray-600 space-y-1">
-              <p>Admin: <span className="font-mono bg-gray-200 px-1 rounded">admin / admin123</span></p>
-              <p>Site Agent: <span className="font-mono bg-gray-200 px-1 rounded">agent1 / agent123</span></p>
-              <p>Client: <span className="font-mono bg-gray-200 px-1 rounded">client1 / client123</span></p>
+              <p>Admin: <span className="font-mono bg-gray-200 px-1 rounded text-xs">admin / admin123</span></p>
+              <p>Site Agent: <span className="font-mono bg-gray-200 px-1 rounded text-xs">agent1 / agent123</span></p>
+              <p>Client: <span className="font-mono bg-gray-200 px-1 rounded text-xs">client1 / client123</span></p>
             </div>
           </div>
         </form>
