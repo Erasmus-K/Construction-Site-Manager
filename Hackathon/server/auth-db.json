@@ -1,0 +1,52 @@
+{
+  "users": [
+    {
+      "id": 1,
+      "username": "admin",
+      "password": "admin123",
+      "role": "admin",
+      "name": "Admin User",
+      "email": "admin@construction.com"
+    },
+    {
+      "id": 2,
+      "username": "agent1",
+      "password": "agent123",
+      "role": "site_agent",
+      "name": "Site Agent",
+      "email": "agent@construction.com"
+    },
+    {
+      "id": 3,
+      "username": "client1",
+      "password": "client123",
+      "role": "client",
+      "name": "John Client",
+      "email": "client@example.com"
+    },
+    {
+      "id": 4,
+      "username": "test",
+      "password": "test",
+      "name": "Test User",
+      "email": "test@test.com",
+      "role": "admin"
+    },
+    {
+      "id": 5,
+      "username": "agent",
+      "password": "qwert",
+      "name": "Mercy",
+      "email": "eraa@gmail.com",
+      "role": "site_agent"
+    },
+    {
+      "id": 6,
+      "username": "Client",
+      "password": "zxcv",
+      "name": "Joy",
+      "email": "joy@gmail.com",
+      "role": "client"
+    }
+  ]
+}

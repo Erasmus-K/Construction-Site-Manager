@@ -1,0 +1,34 @@
+{
+  "name": "construction-site-manager",
+  "version": "1.0.0",
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview",
+    "server": "json-server --watch db.json --port 3001",
+    "ai-server": "node mock-ai-server.js",
+    "sentinel-server": "node mock-sentinel-server.js",
+    "auth-server": "node server/auth-server.js",
+    "start": "node start-all.js",
+    "start-old": "concurrently \"npm run server\" \"npm run ai-server\" \"npm run sentinel-server\" \"npm run auth-server\" \"sleep 3 && npm run dev\""
+  },
+  "dependencies": {
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0",
+    "react-router-dom": "^6.8.0"
+  },
+  "devDependencies": {
+    "@types/react": "^18.2.43",
+    "@types/react-dom": "^18.2.17",
+    "@vitejs/plugin-react": "^4.2.1",
+    "autoprefixer": "^10.4.14",
+    "concurrently": "^8.2.2",
+    "cors": "^2.8.5",
+    "express": "^4.18.2",
+    "json-server": "^0.17.1",
+    "postcss": "^8.4.24",
+    "tailwindcss": "^3.3.0",
+    "vite": "^5.0.8"
+  }
+}
